@@ -635,6 +635,8 @@ color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+ 
+  background-color: #f1f3f6;
 }
 .RegisterAccount{
   text-decoration: none;

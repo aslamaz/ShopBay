@@ -751,7 +751,7 @@ height: 737.562px; */
 
 .cartMaindiv {
   display: flex;
-  width: 100%;
+  width: 90%;
   /* height: 913.94px; */
 
   padding: 8px;
@@ -2531,4 +2531,115 @@ width: 500px;
 datalist{
   position: absolute;
   left: 100px;
+}
+.-XmWnM {
+  width: 1244px;
+  height: 304.578px;
+  text-align: center;
+  padding: 30px 0 36px;
+  background: #fff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.-XmWnM ._23xWM8 {
+  height: 162px;
+}
+.-XmWnM .s2gOFd {
+  display: block;
+  font-size: 18px;
+  margin-top: 24px;
+  font-family: Roboto, Arial, sans-serif;
+}
+.-XmWnM .orqM3- {
+  display: block;
+  font-size: 12px;
+  margin-top: 10px;
+  font-family: Roboto, Arial, sans-serif;
+}
+.QqFHMw {
+  /* width: 60.297px;
+  height: 17px; */
+  font-family: Roboto, Arial, sans-serif;
+
+  margin-top: 20px;
+  padding: 12px 72px;
+  border-radius: 2px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  transition: box-shadow .2s ease;
+  vertical-align: super;
+  background: #0035c8;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+ 
+}
+.white_contentCart{
+  display: none;
+  position: absolute;
+  top: 19%;
+  left: 33%;
+  width: 406px;
+  height: 225.969px;
+  padding: 16px;
+  background-color: white;
+  z-index: 1002;
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  margin: 50px 0;
+}
+.black_overlayCart{
+  display: none;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  opacity:0.5;
+}
+.gsqLM9 {
+  padding: 0 26px 12px;
+  color: #878787;
+  font-size: 16px;
+  font-family: Roboto, Arial, sans-serif;
+
+}
+.WGsKhl {
+  padding: 26px;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: Roboto, Arial, sans-serif;
+
+}
+.YDw732 {
+  margin-bottom: 24px;
+}
+.f-DWwy {
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+.t9UCZh {
+  font-size: 16px;
+}
+.fF30ZI {
+  font-weight: 500;
+  padding: 14px 0;
+  min-width: 166px;
+  border-radius: 2px;
+  box-shadow: none;
+  border: 1px solid #c2c2c2;
+  text-transform: uppercase;
+  text-align: center;
+}
+.A0MXnh {
+  font-size: 16px;
+  background: #2874f0;
+  border: none;
+  color: white;
 }
