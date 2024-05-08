@@ -12,6 +12,8 @@ import { Carousel } from 'react-responsive-carousel';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import moment from 'moment'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = () => {
     const percentage = 20;
@@ -46,12 +48,13 @@ const ProductDetails = () => {
             console.log(response.data);
             const data = response.data;
             setShowGallery(data);
-        }).catch((error)=> {
+        }).catch((error) => {
             console.log(error);
         })
     }
 
     const AddToCart = () => {
+
         const currentDateAndTime = moment().format("DD MMM YY");
         const futureDateAndTime = moment().add(7, 'days').format("DD MMM YY");
         const futureDayName = moment().add(4, 'days').format("dddd");
@@ -75,11 +78,16 @@ const ProductDetails = () => {
             }
             axios.post('http://localhost:5000/Cart', bookingData).then((response) => {
                 console.log(response.data.message);
-                alert(response.data.message)
-                navigate("/User/PageCart")
+                toast.success(response.data.message);
+                setTimeout(() =>   navigate("/User/PageCart"),2000)
+
+              
             })
         })
     }
+   
+
+
 
     const buyNow = () => {
         const currentDateAndTime = moment().format("DD MMM YY");
@@ -105,12 +113,12 @@ const ProductDetails = () => {
             }
             axios.post('http://localhost:5000/Cart', bookingData).then((response) => {
                 console.log(response.data.message);
-                
+
             })
             axios.post(`http://localhost:5000/buyNowStatusChange/${Id}`).then((response) => {
-            console.log(response.data);
-        })
-           
+                console.log(response.data);
+            })
+
         })
     }
 
@@ -195,7 +203,7 @@ const ProductDetails = () => {
                     <Carousel showArrows={false} showStatus={false} showIndicators={false} axis={'horizontal'} style={{ display: 'flex' }}>
 
                         <div className='prdctDetailImagediv'>
-                            <img src={showProduct.prdctimgsrc} alt='img' style={{ objectFit: "contain",height:"426px" }} />
+                            <img src={showProduct.prdctimgsrc} alt='img' style={{ objectFit: "contain", height: "426px" }} />
                         </div>
                         {
                             showGallery.map((galleryImg, key) => (
@@ -216,13 +224,21 @@ const ProductDetails = () => {
 
                     <div className='buyButtons'>
                         <button className='btnAddcart' onClick={AddToCart}>ADD TO CART</button>
+                        <ToastContainer 
+
+                        position='bottom-center'
+                        autoClose='5000'
+                        theme='dark'
+                        hideProgressBar="true"
+                        
+                        />
                         <Link to={`/User/BuyNowCheckout/${showProduct._id}`} className='Userlinks'><button className='btnBuynow' onClick={buyNow}>BUY NOW</button></Link>
                     </div>
                 </div>
 
 
-                <div style={{ margin: "10px", flex: 5,height:"717.562px",overflowY:"scroll",scrollbarWidth: "none" }}>
-                   
+                <div style={{ margin: "10px", flex: 5, height: "717.562px", overflowY: "scroll", scrollbarWidth: "none" }}>
+
                     <div style={{
                         fontSize: "18px",
                         color: "#black",
@@ -315,7 +331,7 @@ const ProductDetails = () => {
                         marginTop: "10px"
                     }}>View 7 more Offers</div>
 
-                    
+
 
                     <div>
                         <div className='pincodeAndDeliveryDate'>
@@ -440,61 +456,61 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                    {review.map((reviewData,key)=>(
+                    {review.map((reviewData, key) => (
 
 
-                    <div className='showReviewsAndRatingsDiv'>
-                        <div style={{ display: "flex" }}>
-                            <div class="_3LWZlK">
-                                <div>{reviewData.reviewRating}</div>
-                                <div>
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg==" className="_1wB99o" />
+                        <div className='showReviewsAndRatingsDiv'>
+                            <div style={{ display: "flex" }}>
+                                <div class="_3LWZlK">
+                                    <div>{reviewData.reviewRating}</div>
+                                    <div>
+                                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMyIgaGVpZ2h0PSIxMiI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTYuNSA5LjQzOWwtMy42NzQgMi4yMy45NC00LjI2LTMuMjEtMi44ODMgNC4yNTQtLjQwNEw2LjUuMTEybDEuNjkgNC4wMSA0LjI1NC40MDQtMy4yMSAyLjg4Mi45NCA0LjI2eiIvPjwvc3ZnPg==" className="_1wB99o" />
+                                    </div>
+
+
+                                </div>
+                                <div className="_2-N8zTTitle">{reviewData.reviewTitle}</div>
+                            </div>
+
+                            <div className='ReviewDivRow'>
+                                <div style={{
+                                    lineheight: "1.4",
+                                    fontsize: "14px",
+                                    color: " #212121"
+                                }}>
+                                    {reviewData.reviewContent}
+                                </div>
+                            </div>
+                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                <div className='BuyerDetailsDiv'>
+                                    <div className="_2sc7ZR">{reviewData.customerId.customerName}</div>
+                                    <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="_2a1p_T">
+                                        <g><circle cx="6" cy="6" r="6" fill="#878787"></circle>
+                                            <path stroke="#FFF" stroke-width="1.5" d="M3 6l2 2 4-4" fill="#878787"></path>
+                                        </g>
+                                    </svg>
+                                    <p class="_2mcZGG">
+                                        <span>Certified Buyer</span>
+                                        <span>, {reviewData.customerId.placeId.districtId.districtName}</span>
+                                    </p>
+                                    <p class="_2sc7ZRDate">{reviewData.reviewDateTime}</p>
                                 </div>
 
 
-                            </div>
-                            <div className="_2-N8zTTitle">{reviewData.reviewTitle}</div>
-                        </div>
+                                <div className='likeAndDislikediv'>
+                                    <div className='likeBtnDiv'>
+                                        <img width="15" height="15" src="https://img.icons8.com/material-rounded/24/878787/thumb-up.png" alt="thumb-up" />                                <div className="_3c3Px5">25</div>
+                                    </div>
 
-                        <div className='ReviewDivRow'>
-                            <div style={{
-                                lineheight: "1.4",
-                                fontsize: "14px",
-                                color: " #212121"
-                            }}>
-                                {reviewData.reviewContent}
-                            </div>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                            <div className='BuyerDetailsDiv'>
-                                <div className="_2sc7ZR">{reviewData.customerId.customerName}</div>
-                                <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="_2a1p_T">
-                                    <g><circle cx="6" cy="6" r="6" fill="#878787"></circle>
-                                        <path stroke="#FFF" stroke-width="1.5" d="M3 6l2 2 4-4" fill="#878787"></path>
-                                    </g>
-                                </svg>
-                                <p class="_2mcZGG">
-                                    <span>Certified Buyer</span>
-                                    <span>, {reviewData.customerId.placeId.districtId.districtName}</span>
-                                </p>
-                                <p class="_2sc7ZRDate">{reviewData.reviewDateTime}</p>
-                            </div>
+                                    <div className='likeBtnDiv'>
+                                        <img width="15" height="15" src="https://img.icons8.com/material-rounded/24/878787/thumbs-down.png" alt="thumbs-down" />
+                                        <div className="_3c3Px5">25</div>
+                                    </div>
 
-
-                            <div className='likeAndDislikediv'>
-                                <div className='likeBtnDiv'>
-                                    <img width="15" height="15" src="https://img.icons8.com/material-rounded/24/878787/thumb-up.png" alt="thumb-up" />                                <div className="_3c3Px5">25</div>
-                                </div>
-
-                                <div className='likeBtnDiv'>
-                                    <img width="15" height="15" src="https://img.icons8.com/material-rounded/24/878787/thumbs-down.png" alt="thumbs-down" />
-                                    <div className="_3c3Px5">25</div>
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
                     ))}
 
 

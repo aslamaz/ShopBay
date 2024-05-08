@@ -3,6 +3,7 @@ import infoicon from './UserImages/infoicon.png'
 import safetyimg from './UserImages/safetyimg.jpg'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
 
 const style = {
     position: 'absolute',
@@ -26,6 +27,7 @@ const PageCart = () => {
     const [showCustomerName, setShowCustomerName] = useState([]);
     const [showCustomerAddress, setShowCustomerAddress] = useState([]);
     const [bookingDate, setBookingDate] = useState('');
+    const [productName, setProductName] = useState('');
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -39,7 +41,10 @@ const PageCart = () => {
             setCartLength(cartLength)
 
             const data = response.data;
+
             setShowBookedProduct(data);
+
+
 
 
 
@@ -96,6 +101,9 @@ const PageCart = () => {
     const removeCart = (id) => {
         axios.delete(`http://localhost:5000/deleteCart/${id}`).then((response) => {
             console.log(response.data);
+
+            // setTimeout(() =>  , 2000)
+            toast.success("Successfully removed" + response.data.productId.productName + "from your Cart" )
             addCartProduct();
         })
     }
@@ -203,6 +211,7 @@ const PageCart = () => {
                                                     <div class="gRTtwM f-DWwy">
                                                         <div class="sBxzFz fF30ZI t9UCZh" onClick={handleClose}>Cancel</div>
                                                         <div class="sBxzFz fF30ZI A0MXnh" onClick={() => removeCart(cartProducts._id)} >Remove</div>
+
                                                     </div>
                                                 </div>
 
@@ -274,7 +283,13 @@ const PageCart = () => {
                     </div>
                 </div>
             )}
-
+            <ToastContainer
+                position='bottom-center'
+                autoClose='3000'
+                theme='dark'
+                hideProgressBar="true"
+                style={{ width: '500px' }} 
+            />
         </div>
     )
 }

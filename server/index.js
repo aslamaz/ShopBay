@@ -1856,8 +1856,10 @@ app.put("/updateDecrementCart/:id", async (req, res) => {
 app.delete("/deleteCart/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        await modelCart.findByIdAndDelete(id);
-        res.json("cart Removed");
+       const dltDta = await modelCart.findByIdAndDelete(id).populate("productId");
+        res.json(dltDta);
+        console.log("deletd dataaaaa");
+        console.log(dltDta);
     } catch (err) {
         console.error(err.message);
         res.status(500).send("server error");
@@ -2364,6 +2366,7 @@ app.post("/loginCheck", async (req, res) => {
             res.send({
                 message: "Login Successful",
                 id: customer._id,
+                name:customer.customerName,
                 login: "customer"
             })
         }

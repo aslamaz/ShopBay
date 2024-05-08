@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import loginPageImg from './GuestImages/FlipkartLoginpage.jpg'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -10,6 +11,9 @@ const Login = () => {
     const [checkEmail, setCheckEmail] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    // Define state variables to track validation status
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
 
 
@@ -24,7 +28,7 @@ const Login = () => {
         axios.post('http://localhost:5000/loginCheck', data).then((response) => {
             console.log(response.data);
             const data = response.data;
-            const { message, login, id } = data
+            const { message, login, id,name } = data
             if (login === "admin") {
                 sessionStorage.setItem("adminId", id)
 
@@ -32,8 +36,9 @@ const Login = () => {
             }
             else if (login === "customer") {
                 sessionStorage.setItem("customerId", id)
-
-                navigate("../User/");
+                toast.success("successfully Login "+name);
+                setTimeout(() =>   navigate("../User/"),2000)
+               
             }
             else if (login === "Shop") {
                 sessionStorage.setItem("shopId", id)
@@ -44,6 +49,21 @@ const Login = () => {
 
 
         })
+
+        // Basic validation for email and password
+        if (!checkEmail.trim()) {
+            setEmailError('Please enter your email.');
+            return;
+        } else {
+            setEmailError('');
+        }
+        if (!checkPassword.trim()) {
+            setPasswordError('Please enter your password.');
+            return;
+        } else {
+            setPasswordError('');
+        }
+
     }
 
     return (
@@ -62,13 +82,18 @@ const Login = () => {
                     <div class="form-rowEmail">
                         <label className='labelEmail'>Enter Email</label>
                         <input type="email" id="typeahead" className='inputemail' onChange={(event) => setCheckEmail(event.target.value)} />
-
+                        {emailError && <span style={{ color: 'red' }}>{emailError}</span>}
                     </div>
 
                     <div class="form-rowpswrd">
                         <label className='labelpswrd'>Enter Pasword</label>
                         <input type={showPassword ? "text" : "password"} id="typeahead" className='inputPswrd' onChange={(event) => setCheckPassword(event.target.value)} />
-                        <input type='checkbox' onChange={(event) => setShowPassword(event.target.checked)} />Show Password
+                        {passwordError && <span style={{ color: 'red' }}>{passwordError}</span>}
+
+                        <div>
+                            <input type='checkbox' onChange={(event) => setShowPassword(event.target.checked)} />Show Password
+                        </div>
+
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "34px" }}>
@@ -83,6 +108,13 @@ const Login = () => {
 
                 </div>
             </div>
+            <ToastContainer
+                position='bottom-center'
+                autoClose='3000'
+                theme='dark'
+                hideProgressBar="true"
+                style={{ width: '500px' }} 
+            />
 
         </div>
     )
