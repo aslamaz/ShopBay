@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import sdcardimage from './UserImages/sdcardAdd.png'
 // import memorycard from './UserImages/memmorycard.jpg'
-import wishlistIcon from './UserImages/wishlistIcon.svg'
 // import wishlistColorIcon from './UserImages/wishlistColorIcon.svg'
-import assuredlogo from './UserImages/flipkartAssuredlogo.png'
-import ratingstar from './UserImages/ratingstar.png'
+
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import RelatedProductComponent from './RelatedProductComponent'
 
 
 function valuetext(value) {
@@ -20,16 +19,15 @@ const Relatedproducts = () => {
   const { id } = useParams();
   const Id = sessionStorage.getItem("customerId");
 
-
   const [showPrdcts, setShowPrdct] = useState([]);
   const [showPrdctsCopy, setShowPrdctCopy] = useState([]);
   const [showSubCategoryName, setSubCategoryName] = useState('');
   const [value, setValue] = React.useState([100, 1000]);
 
-  const clearFilter = () =>{
-    setValue([100,1000]);
+  const clearFilter = () => {
+    setValue([100, 1000]);
     setShowPrdct(showPrdctsCopy);
-   }
+  }
 
   const handleChange = (event, newValue) => {
     const [one, two] = newValue
@@ -44,15 +42,6 @@ const Relatedproducts = () => {
   };
 
 
-  const Wishlist = (prdctId) => {
-    const data = {
-      productId: prdctId,
-      customerId: Id
-    }
-    axios.post(`http://localhost:5000/Wishlist`, data).then((response) => {
-      console.log(response.data);
-    })
-  }
 
 
   useEffect(() => {
@@ -69,14 +58,7 @@ const Relatedproducts = () => {
   }, [])
 
 
-  const truncateText = (text, maxWords) => {
-    const words = text.split(' ');
-    if (words.length <= maxWords) {
-      return text;
-    }
-    return words.slice(0, maxWords).join(' ');
-  }
-
+  
   return (
     <div className='relatedProductsMainDiv'>
       <div className='hoverPrdctNames'>
@@ -108,7 +90,7 @@ const Relatedproducts = () => {
             <div className='filterSection'>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ fontSize: "18px", fontFamily: "Roboto,Arial,sans-serif" }}>Filters</div>
-                <button style={{ fontSize: "12px", fontFamily: "Roboto,Arial,sans-serif", fontWeight: "500", color: "#2874f0" }}onClick={clearFilter}>CLEAR ALL</button>
+                <button style={{ fontSize: "12px", fontFamily: "Roboto,Arial,sans-serif", fontWeight: "500", color: "#2874f0" }} onClick={clearFilter}>CLEAR ALL</button>
               </div>
 
               <div className='pricefilter'>
@@ -198,49 +180,7 @@ const Relatedproducts = () => {
 
 
 
-              <div className='prdctcards'>
-                {
-                  console.log(productsdtls)
-                }
-
-                <div className='wishlistIconDiv'>
-                  <div className='wishlistIconDiv2'>
-                    <button onClick={() => Wishlist(productsdtls._id)}>
-                      <img src={wishlistIcon} alt="img" />
-                    </button>
-                  </div>
-                </div>
-
-                <div className='imgdiv'>
-                  <Link to={`/User/ProductDetails/${productsdtls._id
-                    }`} className='Userlinks'><img src={productsdtls.prdctimgsrc} alt="img" className='imagestyling' /></Link>
-                </div>
-
-                <div style={{ padding: "10px" }}>
-
-                  <div style={{ fontSize: "14px" }}>{truncateText(productsdtls.ProductDescription, 7) + '...'}</div>
-
-
-
-                  <div style={{ display: "flex", alignItems: "center", marginTop: "5px" }}>
-                    <div style={{
-                      width: "39.47px",
-                      height: "19px",
-                      backgroundColor: "green",
-                      color: "white",
-                      padding: "2px 4px 2px 6px",
-                      borderRadius: "3px",
-                      marginRight: "5px"
-                    }}>4.4 <img src={ratingstar} alt="img" className='ratingstar' /></div>
-
-                    <div style={{
-                      width: "70px", height: "17", padding: "0px 0px 0px 8px",
-                      backgroundColor: "#878787", marginRight: "5px",
-                    }}>(1,02,116)</div>
-                    <div><img src={assuredlogo} alt="img" className='flipkartAssuredlogo' /></div>
-                  </div>
-                </div>
-              </div>
+              <RelatedProductComponent productsdtls={productsdtls} showPrdctsCopy={showPrdctsCopy}/>
 
             ))}
 

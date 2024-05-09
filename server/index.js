@@ -2291,7 +2291,7 @@ app.post("/Wishlist", async (req, res) => {
         const { productId, customerId } = req.body;
         const newWishlist = await modelWishlist.findOne({ productId, customerId });
         const existingWishlist = await modelWishlist.findOne({ productId, customerId });
-
+console.log(existingWishlist);
         if (existingWishlist) {
 
             res.send({ message: "Already Inserted" })
@@ -2339,7 +2339,26 @@ app.get("/getWishlist/:id", async (req, res) => {
     }
 });
 
-//Delete Feedback.................
+
+//Get wishlist with productId..............
+app.get("/getWishlistPrdct/:id", async (req, res) => {
+    const id = req.params.id
+    try {
+        const getWishlist = await modelWishlist.find({ productId: id });
+        if (getWishlist.length > 0) {
+            res.json(true);
+        } else {
+            res.json(false);
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("server error");
+    }
+});
+
+
+
+//Delete wishlist.................
 app.delete("/deleteWishlist/:id", async (req, res) => {
     const id = req.params.id;
     try {

@@ -169,7 +169,7 @@ z-index: 999;
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  width: 80.47px;
+  /* width: 120.47px; */
   height: 42px;
   display: flex;
   align-items: center;
@@ -1384,6 +1384,7 @@ border-bottom: 1px solid #e4e7ed;
 .headphoneimgdiv {
   width: 120px;
   height: 100px;
+  object-fit: contain;
 }
 
 .headphoneimg {

@@ -25,6 +25,7 @@ const Head = () => {
   const Id = sessionStorage.getItem("customerId");
   const [cartlength,setCartLength] = useState([]);
   const [search,setSearch] = useState([]);
+  const [name, setName] = useState('');
   const [productDetails, setProductDetails] = useState([]);
   const searchedProduct=useNavigate();
   
@@ -62,6 +63,13 @@ useEffect(()=>{
  
 addCartProduct();
 allProducts();
+axios.get(`http://localhost:5000/getCustomer/${Id}`).then((response) => {
+
+    const data = response.data;
+    console.log(data);
+    setName(data.customerName)
+   
+})
 },[])
 
   return (
@@ -92,7 +100,7 @@ allProducts();
         <div className='dropdown'>
           <div className='Userlinks'>
 
-            <button className="dropbtn"> <img src={loginicon} alt="loginiconimg" className='linklogos' />Login</button>
+            <button className="dropbtn"> <img src={loginicon} alt="loginiconimg" className='linklogos' />{name}</button>
           </div>
           <div className="dropdown-content">
             <Link to={'/User/PersonalInfo'} className='Userlinks'>MyProfile</Link>
