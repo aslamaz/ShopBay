@@ -193,7 +193,7 @@ const WishList = () => {
                                 </div>
                                 </Link>
                                 <div>
-                                    <button onClick={() => deleteWishlist(wishlistPrdct._id)}><img src={wishlistDlt} alt='img' style={{ width: "16px", height: "16px" }} /></button>
+                                    <button onClick={() => deleteWishlist(wishlistPrdct.productId._id)}><img src={wishlistDlt} alt='img' style={{ width: "16px", height: "16px" }} /></button>
                                 </div>
 
                             </div>

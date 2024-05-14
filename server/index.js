@@ -5,6 +5,7 @@ const { connect, Schema, model, default: mongoose } = require("mongoose");
 const multer = require("multer");
 const { request } = require("https");
 const { parse } = require("querystring");
+const mailer = require('nodemailer')
 
 
 const app = express();
@@ -1622,6 +1623,7 @@ app.get("/cartWithOrderStatus/:id", async (req, res) => {
 
 // Place Order from Cart.............
 app.post("/placeOrder/:id", async (req, res) => {
+    let email = "shopbay841@gmail.com";
     const Id = req.params.id;
     try {
         // const cartWithBooking = await modelCart.find().populate("bookingId").populate("productId")
@@ -1633,7 +1635,28 @@ app.post("/placeOrder/:id", async (req, res) => {
             { __v: 1 },
             { new: true }
         );
-
+        let content = `
+<html>
+<head>
+    <title>OTP Email</title>
+    <body>
+    <h1>Confirmation Number:${Id}
+    Hello [name],<br/>
+    
+    We’re happy to let you know that we’ve received your order.<b/r>
+    
+    Once your package ships, we will send you an email with a tracking number and link so you can see the movement of your package.<br/>
+    
+    If you have any questions, contact us here or call us on [contact number]!<br/>
+    
+    We are here to help!<br/>
+    
+    Returns: If you would like to return your product(s), please see here [link] or contact us.<h1/>
+    </body>
+    </head>
+    </html>
+`
+sendEmail(email,content)
         res.json(updatedBooking);
 
 
@@ -1856,7 +1879,7 @@ app.put("/updateDecrementCart/:id", async (req, res) => {
 app.delete("/deleteCart/:id", async (req, res) => {
     const id = req.params.id;
     try {
-       const dltDta = await modelCart.findByIdAndDelete(id).populate("productId");
+        const dltDta = await modelCart.findByIdAndDelete(id).populate("productId");
         res.json(dltDta);
         console.log("deletd dataaaaa");
         console.log(dltDta);
@@ -2291,7 +2314,7 @@ app.post("/Wishlist", async (req, res) => {
         const { productId, customerId } = req.body;
         const newWishlist = await modelWishlist.findOne({ productId, customerId });
         const existingWishlist = await modelWishlist.findOne({ productId, customerId });
-console.log(existingWishlist);
+        console.log(existingWishlist);
         if (existingWishlist) {
 
             res.send({ message: "Already Inserted" })
@@ -2362,8 +2385,8 @@ app.get("/getWishlistPrdct/:id", async (req, res) => {
 app.delete("/deleteWishlist/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        await modelWishlist.findByIdAndDelete(id);
-        res.json("wishllist product Removed");
+        await modelWishlist.findByIdAndDelete({productId:id});
+        res.json("wishllist product Removed....");
     } catch (err) {
         console.error(err.message);
         res.status(500).send("server error");
@@ -2385,7 +2408,7 @@ app.post("/loginCheck", async (req, res) => {
             res.send({
                 message: "Login Successful",
                 id: customer._id,
-                name:customer.customerName,
+                name: customer.customerName,
                 login: "customer"
             })
         }
@@ -2417,3 +2440,37 @@ app.post("/loginCheck", async (req, res) => {
         // console.log(newLogin);
     }
 });
+
+
+
+// function sendEmail(email, "Hello");
+// res.send({
+//     sectionsubport: "Data Saved",
+// });
+
+
+
+var transporter = mailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "muhammedazeez473@gmail.com", //from email Id
+        pass: "apwrkaqqwohzgfdi", // App password created from google account
+    },
+});
+
+function sendEmail(to, content) {
+    const mailOptions = {
+        from: "muhammedazeez473@gmail.com", //from email Id for recipient can view
+        to,
+        subject: "OrderCofirmation",
+        html: content,
+
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email sented");
+        }
+    });
+}

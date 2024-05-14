@@ -105,6 +105,8 @@ const PageCart = () => {
             // setTimeout(() =>  , 2000)
             toast.success("Successfully removed" + response.data.productId.productName + "from your Cart" )
             addCartProduct();
+            handleClose();
+
         })
     }
 
