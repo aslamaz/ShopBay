@@ -24,6 +24,7 @@ const WishList = () => {
     const Id = sessionStorage.getItem("customerId");
 
     const deleteWishlist = (id) => {
+        console.log(id);
         axios.delete(`http://localhost:5000/deleteWishlist/${id}`).then((response) => {
             console.log(response.data);
             getWishlist();
@@ -40,6 +41,7 @@ const WishList = () => {
 
     const getWishlist = () =>{
         axios.get(`http://localhost:5000/getWishlist/${Id}`).then((response) => {
+            console.log(response.data);
             console.log(response.data.length);
             const wishlistLength = response.data.length;
             setWishlistLen(wishlistLength);
@@ -193,7 +195,7 @@ const WishList = () => {
                                 </div>
                                 </Link>
                                 <div>
-                                    <button onClick={() => deleteWishlist(wishlistPrdct.productId._id)}><img src={wishlistDlt} alt='img' style={{ width: "16px", height: "16px" }} /></button>
+                                    <button onClick={() => deleteWishlist(wishlistPrdct._id)}><img src={wishlistDlt} alt='img' style={{ width: "16px", height: "16px" }} /></button>
                                 </div>
 
                             </div>

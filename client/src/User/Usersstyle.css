@@ -174,7 +174,17 @@ z-index: 999;
   display: flex;
   align-items: center;
 }
-
+._3pKU-e {
+  width: 200px;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ padding: 12px 16px;
+}
+.SFnind {
+  width: 18px;
+  height: 18px;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -183,22 +193,23 @@ z-index: 999;
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #ffffff;
+
   color: white;
-  min-width: 160px;
+  
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
 .dropdown-content a {
   color: rgb(0, 0, 0);
-  padding: 12px 16px;
+  
   text-decoration: none;
   display: block;
 }
 
-.dropdown-content:hover {
-  background-color: #ffffff;
+._3pKU-e:hover {
+  background-color: #f1f1f1;
 }
 
 .dropdown:hover .dropdown-content {
@@ -338,7 +349,7 @@ object-fit: contain;
   }
 
   &::-webkit-scrollbar:horizontal {
-    height: 10px;
+    height: 6px;
   }
 
   &::-webkit-scrollbar-track {
@@ -346,7 +357,6 @@ object-fit: contain;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
     background: transparentize(#ccc, 0.5);
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
   }
@@ -363,6 +373,7 @@ object-fit: contain;
   justify-content: flex-end;
   margin-top: 10px;
   margin-left: 6px;
+  
 }
 
 .priceandimage {
@@ -2644,4 +2655,5 @@ datalist{
   border: none;
   color: white;
 }
+
 

@@ -644,6 +644,7 @@ color: white;
     font-weight: 500;
     font-family: Roboto,Arial,sans-serif;
 margin-left: 2px;
+font-size: 13px;
 }
 .LogLinks{
   display: flex;
@@ -651,6 +652,6 @@ margin-left: 2px;
   justify-content: center;
   align-items: center;
   position:absolute;
-  bottom:0;
-  right:90px;
+  margin-top: 10px;
+
 }

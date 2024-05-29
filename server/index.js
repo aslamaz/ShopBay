@@ -1323,6 +1323,69 @@ app.post("/Booking", async (req, res) => {
     }
 });
 
+// Place Order from Cart.............
+app.post("/placeOrder/:id", async (req, res) => {
+    let email = req.body.email;
+    let Id = req.params.id;
+    let customerName = req.body.customerName;
+    console.log(Id);
+    try {
+        // const cartWithBooking = await modelCart.find().populate("bookingId").populate("productId")
+        // const filteredcartWithBooking = cartWithBooking.filter(
+        //     (cartWithBooking) => cartWithBooking.productId
+        // );
+        const updatedBooking = await modelBooking.findOneAndUpdate(
+            { __v: 0, customerId: Id },
+            { __v: 1 },
+            { new: true }
+        );
+        let content = `
+        <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    font-size: 16px;
+                    line-height: 1.6;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                h1 {
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                }
+                p {
+                    margin-bottom: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Confirmation Number: ${Id}</h1>
+                <p>Hello ${customerName},</p>
+                <p>We’re happy to let you know that we’ve received your order.</p>
+                <p>Once your package ships, we will send you an email with a tracking number and link so you can see the movement of your package.</p>
+                <p>If you have any questions, contact us here <a href="ShopBay@gmail.com">ShopBay@gmail.com</a>!</p>
+                <p>We are here to help!</p>
+                <p>Returns: If you would like to return your product(s), please see <a href="ShopBay@gmail.com">ShopBay@gmail.com</a> or contact us.</p>
+            </div>
+        </body>
+        </html>
+`
+        sendEmail(email, content)
+        res.json(updatedBooking);
+
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("server Error");
+    }
+});
+
 //Get Booking..............
 app.get("/getBooking", async (req, res) => {
     try {
@@ -1352,7 +1415,8 @@ app.get("/myOrderWithBooking/:id", async (req, res) => {
     try {
         const myOrderWithBooking = await modelBooking.find({
             __v: { $gt: 0 },
-            customerId: Id
+            customerId: Id,
+            __v: { $ne: 5 } // Exclude orders with status 4
         }).populate('customerId');
         res.json(myOrderWithBooking);
     } catch (err) {
@@ -1621,51 +1685,7 @@ app.get("/cartWithOrderStatus/:id", async (req, res) => {
     }
 });
 
-// Place Order from Cart.............
-app.post("/placeOrder/:id", async (req, res) => {
-    let email = "shopbay841@gmail.com";
-    const Id = req.params.id;
-    try {
-        // const cartWithBooking = await modelCart.find().populate("bookingId").populate("productId")
-        // const filteredcartWithBooking = cartWithBooking.filter(
-        //     (cartWithBooking) => cartWithBooking.productId
-        // );
-        const updatedBooking = await modelBooking.findOneAndUpdate(
-            { __v: 0, customerId: Id },
-            { __v: 1 },
-            { new: true }
-        );
-        let content = `
-<html>
-<head>
-    <title>OTP Email</title>
-    <body>
-    <h1>Confirmation Number:${Id}
-    Hello [name],<br/>
-    
-    We’re happy to let you know that we’ve received your order.<b/r>
-    
-    Once your package ships, we will send you an email with a tracking number and link so you can see the movement of your package.<br/>
-    
-    If you have any questions, contact us here or call us on [contact number]!<br/>
-    
-    We are here to help!<br/>
-    
-    Returns: If you would like to return your product(s), please see here [link] or contact us.<h1/>
-    </body>
-    </head>
-    </html>
-`
-sendEmail(email,content)
-        res.json(updatedBooking);
 
-
-
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send("server Error");
-    }
-});
 
 
 // buyNowStatusChange.............
@@ -2314,9 +2334,9 @@ app.post("/Wishlist", async (req, res) => {
         const { productId, customerId } = req.body;
         const newWishlist = await modelWishlist.findOne({ productId, customerId });
         const existingWishlist = await modelWishlist.findOne({ productId, customerId });
-        console.log(existingWishlist);
         if (existingWishlist) {
-
+            console.log(existingWishlist._id);
+            await modelWishlist.findByIdAndDelete(existingWishlist._id);
             res.send({ message: "Already Inserted" })
 
         } else {
@@ -2324,7 +2344,7 @@ app.post("/Wishlist", async (req, res) => {
             console.log(newWishlist);
             let msg = ""
             if (newWishlist) {
-                await modelWishlist.findByIdAndDelete(newWishlist._id);
+                console.log(newWishlist);
                 msg = "Remove from Wishlist"
             }
 
@@ -2385,7 +2405,7 @@ app.get("/getWishlistPrdct/:id", async (req, res) => {
 app.delete("/deleteWishlist/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        await modelWishlist.findByIdAndDelete({productId:id});
+        await modelWishlist.findByIdAndDelete(id);
         res.json("wishllist product Removed....");
     } catch (err) {
         console.error(err.message);

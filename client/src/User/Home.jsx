@@ -336,7 +336,6 @@ const Home = () => {
                     </div>
                     <div className='pricenamediv'>
                       <div style={{ display: "flex", justifyContent: "center", }}>{subcategory.subCategoryName}</div>
-                      {/* <div style={{ display: "flex", justifyContent: "center", fontSize: "20px" }}>{prdctimages.productRate}</div> */}
                     </div>
 
                   </div>

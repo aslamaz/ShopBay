@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 const CheckoutPage = () => {
     const Id = sessionStorage.getItem("customerId");
-   
+console.log(Id);
     const [showBookedProduct, setShowBookedProduct] = useState([]);
     const [priceDetails, setPriceDetails] = useState([]);
     const [totalPrice, setTotalPrice] = useState('');
@@ -136,7 +136,13 @@ const CheckoutPage = () => {
     }
 
     const placeOrder = () => {
-        axios.post(`http://localhost:5000/placeOrder/${Id}`).then((response) => {
+        var dat = {
+            email: showCustomerEmail,
+            customerName: showCustomerName, 
+            // customerId : Id
+          };
+
+        axios.post(`http://localhost:5000/placeOrder/${Id}`,dat).then((response) => {
             console.log(response.data);
         })
 
@@ -155,6 +161,7 @@ const CheckoutPage = () => {
         }, 2000);
 
 
+        console.log(dat);
     }
 
     const calculateFutureDate = () => {

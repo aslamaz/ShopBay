@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import wishlistimage from './UserImages/wishlistprofile.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import myordericon from './UserImages/iconsMyorder.png'
 import arrowpath from './UserImages/arrowpathwishlist.png'
 import accountinfoicon from './UserImages/acountinfoicon.png'
@@ -11,6 +11,7 @@ import profilebottomimg from './UserImages/profilepagebotttomimg.png'
 import axios from 'axios'
 
 const PersonalInfo = () => {
+    const Id = sessionStorage.getItem("customerId")
     const [isEditing, setIsEditing] = useState(false);
     const [isEditEmail, setIsEditEmail] = useState(false);
     const [isEditPhone, setIsEditPhone] = useState(false);
@@ -21,9 +22,10 @@ const PersonalInfo = () => {
     const [phone, setPhone] = useState('');
     const [Address, setAddress] = useState('');
     const [editcustomer, setEditcustomer] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const Id = sessionStorage.getItem("customerId")
+       
         axios.get(`http://localhost:5000/getCustomer/${Id}`).then((response) => {
 
             const data = response.data;
@@ -70,6 +72,11 @@ const PersonalInfo = () => {
         setIsEditPhone(false);
 
     };
+
+    const handleLogout = () =>{
+        sessionStorage.clear("customerId", Id)
+        navigate("/Guest/Login")
+      }
 
     return (
         <div>
@@ -139,7 +146,7 @@ const PersonalInfo = () => {
                     <div className='logountdivwishlistMain'>
                         <div className='logountdivwishlist'>
                             <div><img src={logouticon} alt="img" className='logouticon' /></div>
-                            <div style={{ color: "#878787", fontFamily: "sans-serif", fontSize: "16px", paddingLeft: "20px", fontWeight: "bold", }}>LOGOUT</div>
+                            <button style={{ color: "#878787", fontFamily: "sans-serif", fontSize: "16px", paddingLeft: "20px", fontWeight: "bold", }} onClick={handleLogout}>LOGOUT</button>
                         </div>
                     </div>
 
