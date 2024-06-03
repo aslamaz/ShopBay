@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { Button, Menu, MenuItem } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox';
+import ComponentMobile from './ComponentMobile'
 
 
 function valuetext(value) {
@@ -54,15 +55,7 @@ const Mobiles = () => {
     };
 
 
-    const Wishlist = (prdctId) => {
-        const data = {
-            productId: prdctId,
-            customerId: Id
-        }
-        axios.post(`http://localhost:5000/Wishlist`, data).then((response) => {
-            console.log(response.data);
-        })
-    }
+   
     const fetchSubcategory = () => {
         axios.get(`http://localhost:5000/getSubCategoryByCategoryId/${id}`).then((response) => {
             console.log(response.data);
@@ -114,14 +107,7 @@ const Mobiles = () => {
     }, [])
 
 
-    const truncateText = (text, maxWords) => {
-        const words = text.split(' ');
-        if (words.length <= maxWords) {
-            return text;
-        }
-        return words.slice(0, maxWords).join(' ');
-    }
-
+   
 
     return (
         <div>
@@ -294,52 +280,7 @@ const Mobiles = () => {
 
                     <div className='Allprdctcards'>
                         {showPrdcts.map((productsdtls, key) => (
-
-
-
-                            <div className='prdctcards'>
-                                {
-                                    console.log(productsdtls)
-                                }
-
-                                <div className='wishlistIconDiv'>
-                                    <div className='wishlistIconDiv2'>
-                                        <button onClick={() => Wishlist(productsdtls._id)}>
-                                            <img src={wishlistIcon} alt="img" />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className='imgdiv'>
-                                    <Link to={`/User/ProductDetails/${productsdtls._id
-                                        }`} className='Userlinks'><img src={productsdtls.prdctimgsrc} alt="img" className='imagestyling' /></Link>
-                                </div>
-
-                                <div style={{ padding: "10px" }}>
-
-                                    <div style={{ fontSize: "14px" }}>{truncateText(productsdtls.ProductDescription, 7) + '...'}</div>
-
-
-
-                                    <div style={{ display: "flex", alignItems: "center", marginTop: "5px" }}>
-                                        <div style={{
-                                            width: "39.47px",
-                                            height: "19px",
-                                            backgroundColor: "green",
-                                            color: "white",
-                                            padding: "2px 4px 2px 6px",
-                                            borderRadius: "3px",
-                                            marginRight: "5px"
-                                        }}>4.4 <img src={ratingstar} alt="img" className='ratingstar' /></div>
-
-                                        <div style={{
-                                            width: "70px", height: "17", padding: "0px 0px 0px 8px",
-                                            backgroundColor: "#878787", marginRight: "5px",
-                                        }}>(1,02,116)</div>
-                                        <div><img src={assuredlogo} alt="img" className='flipkartAssuredlogo' /></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ComponentMobile  productsdtlsW={productsdtls}/>
 
                         ))}
 

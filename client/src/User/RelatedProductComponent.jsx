@@ -5,9 +5,9 @@ import assuredlogo from './UserImages/flipkartAssuredlogo.png'
 import ratingstar from './UserImages/ratingstar.png'
 import axios from 'axios'
 
-const RelatedProductComponent = ({ productsdtls, wishlistProductId }) => {
-  console.log(wishlistProductId);
+const RelatedProductComponent = ({ productsdtls }) => {
   const productId = (productsdtls._id);
+  console.log(productId);
   const Id = sessionStorage.getItem("customerId");
 
   const [showHeart, setShowHeart] = useState(false);

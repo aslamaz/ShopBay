@@ -28,7 +28,7 @@ const Login = () => {
         axios.post('http://localhost:5000/loginCheck', data).then((response) => {
             console.log(response.data);
             const data = response.data;
-            const { message, login, id,name } = data
+            const { message, login, id, name } = data
             if (login === "admin") {
                 sessionStorage.setItem("adminId", id)
 
@@ -36,9 +36,9 @@ const Login = () => {
             }
             else if (login === "customer") {
                 sessionStorage.setItem("customerId", id)
-                toast.success("successfully Login "+name);
-                setTimeout(() =>   navigate("../User/"),2000)
-               
+                toast.success("successfully Login " + name);
+                setTimeout(() => navigate("../User/"), 2000)
+
             }
             else if (login === "Shop") {
                 sessionStorage.setItem("shopId", id)
@@ -103,17 +103,40 @@ const Login = () => {
 
                     <div className='LogLinks'>
                         <Link to={'/Guest/User'} className='RegisterAccount'>Create an Account?</Link>
-                        <Link to={'/User/Changepassword'} className='RegisterAccount'>ForgotPassword</Link>
+                        {/* <Link to={#popo} >ForgotPassword</Link> */}
+                        <a class="button" href="#popup1" className='RegisterAccount'>ForgotPassword</a>
+
                     </div>
 
                 </div>
             </div>
+
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2>Forgot your password</h2>
+                    <a class="close" href="#">×</a>
+                    <div class="content">
+                        Please enter the email address  you'd like your password reset Otp sent to
+                    </div>
+                    <div>
+                        <div class="input-container">
+                            <input type="mail" required="" placeholder='Enter email address'/>
+                        </div>
+                        <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+                             <Link to={'/User/OtpPage'} style={{width:"100%"}}>
+                            <button className='btnOTP'>Request OTP</button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <ToastContainer
                 position='bottom-center'
                 autoClose='3000'
                 theme='dark'
                 hideProgressBar="true"
-                style={{ width: '500px' }} 
+                style={{ width: '500px' }}
             />
 
         </div>

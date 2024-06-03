@@ -3,7 +3,7 @@ import sdcardimage from './UserImages/sdcardAdd.png'
 // import memorycard from './UserImages/memmorycard.jpg'
 // import wishlistColorIcon from './UserImages/wishlistColorIcon.svg'
 
-import { Link, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import axios from 'axios'
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
@@ -17,7 +17,7 @@ function valuetext(value) {
 const Relatedproducts = () => {
 
   const { id } = useParams();
-  const Id = sessionStorage.getItem("customerId");
+  // const Id = sessionStorage.getItem("customerId");
 
   const [showPrdcts, setShowPrdct] = useState([]);
   const [showPrdctsCopy, setShowPrdctCopy] = useState([]);
@@ -50,6 +50,7 @@ const Relatedproducts = () => {
 
       const SubCategoryName = response.data[0];
       setSubCategoryName(SubCategoryName.subCategoryId.subCategoryName);
+      console.log(SubCategoryName);
 
       const data = response.data;
       setShowPrdct(data);
