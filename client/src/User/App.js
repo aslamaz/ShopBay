@@ -18,8 +18,6 @@ import DeliveryDetails from './DeliveryDetails'
 import WriteReview from './WriteReview'
 import BuyNowCheckout from './BuyNowCheckout'
 import Mobiles from './Mobiles'
-import OtpPage from './OtpPage'
-import ForgotResetPswrd from './ForgotResetPswrd'
 
 
 const App = () => {
@@ -46,8 +44,7 @@ const App = () => {
         <Route path='WriteReview/:id' element={<WriteReview/>}/>
         <Route path='BuyNowCheckout/:id' element={<BuyNowCheckout/>}/>
         <Route path='Mobiles/:id' element={<Mobiles/>}/>
-        <Route path='OtpPage' element={<OtpPage/>}/>
-        <Route path='ForgotResetpswrd' element={<ForgotResetPswrd/>}/>
+       
        
     </Routes>
     </div>

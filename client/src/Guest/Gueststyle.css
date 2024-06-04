@@ -319,11 +319,7 @@ input:not(:focus):valid~.cstmr-floating-label {
   border: none;
 }
 
-.floating-label-group {
-  position: relative;
-  margin-top: 15px;
-  margin-bottom: 25px;
-}
+
 
 .shop-floating-label {
   font-size: 16px;
@@ -690,7 +686,7 @@ font-size: 13px;
   margin-left: -140px;
   margin-top: 0;
   color: #333;
-  font-family: Tahoma, Arial, sans-serif;
+  font-family:  Roboto, Arial, sans-serif;
 }
 .popup .close {
   position: absolute;
@@ -749,6 +745,119 @@ font-size: 13px;
 	border-radius:4px;
   width: 100%;
   margin-top: 10px;
+}
+/* .OTPHOMEDIV{
+  width:  auto;
+  height: 504.578px;
+  background: #746e6e;
+} */
+.-XmWnMOTP {
+  width: 1244px;
+  height: 304.578px;
+  text-align: center;
+ padding: 25px;
+  background: #fff;
+  /* margin: 20px; */
+  /* margin-left: 28px; */
+  margin-top: 10px;
+}
+.s2gOFdOTP {
+  display: block;
+  font-size: 18px;
+  margin-top: 24px;
+  font-family: Roboto, Arial, sans-serif;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.orqM3-OTP {
+  display: block;
+  font-size: 12px;
+  font-family: Roboto, Arial, sans-serif;
+  color: #746e6e;
+}
+.orqM3-OTPCntnt {
+  display: block;
+  font-size: 12px;
+  font-family: Roboto, Arial, sans-serif;
+  color: #746e6e;
+  margin-top: 45px;
+}
+.otpDiv{
+  height: 50px;
+  margin-top: 40px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.btnOTPPage{
+  color:#fff;
+	background-color:#fb641b;
+	outline: none;
+    border: 0;
+	padding:10px 20px;
+  font-family:  Roboto, Arial, sans-serif;
+	border-radius:4px;
+  width: 25%;
+  margin-top: 10px;
+}
+.btnOTPPage:hover{
+  background-color: hsl(20, 94%, 49%);
+}
+
+.ResetPswrdFullDiv {
+  width: 1244px;
+  height: 304.578px;
+  text-align: center;
+ padding: 25px;
+  background: #fff;
+  /* margin: 20px; */
+  /* margin-left: 28px; */
+  margin-top: 10px;
+}
+.resetPswrd{
+  font-size: 30px;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: center;
+}
+.resetpaswrdInputarea {
+  margin-top: 40px;
+  width: 500px;
+  height: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.resetpaswrdInputareaPswrd {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 300px;
+}
+
+.resetPBTn {
+  color:#fff;
+	background-color:#fb641b;
+	outline: none;
+    border: 0;
+	padding:10px 20px;
+  font-family:  Roboto, Arial, sans-serif;
+	border-radius:4px;
+  width: 50%;
+  margin-top: 10px;
+}
+.resetPBTn:hover {
+  background-color: hsl(20, 94%, 49%);
+}
+.OtpErrDiv{
+  color: red;
+  font-size: 12px;
+  font-family: sans-serif;
 }
 
 

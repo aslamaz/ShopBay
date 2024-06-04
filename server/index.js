@@ -808,6 +808,24 @@ app.get("/getCustomer/:id", async (req, res) => {
     }
 });
 
+//Get Customer with email..............
+app.post("/getCustomerWithEmail", async (req, res) => {
+    const getEmail = req.body.email;
+    const newPassword = req.body.newPassword
+    try {
+        const getCustomer = await modelCustomer.findOne({ customerEmail : getEmail });
+        const updateCustomer = await modelCustomer.findByIdAndUpdate(
+            getCustomer._id,
+            { customerPassword : newPassword }, { new: true }
+        );
+        res.json(updateCustomer);
+        console.log(updateCustomer);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("server eror");
+    }
+});
+
 // Customer with Place.............
 app.get("/placeWithCustomer", async (req, res) => {
     try {
@@ -2494,3 +2512,63 @@ function sendEmail(to, content) {
         }
     });
 }
+
+// sent otp to Eamil.............................
+
+app.post('/sendOTP', (req, res) => {
+    const email= req.body.email;
+    const OTP = generateOTP();
+    const OTPContent = `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Email</title>
+    </head>
+    <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+        <h2 style="color: #333;">Your One-Time Password ${OTP}</h2>
+        <p style="color: #555;">Hello,</p>
+        <p style="color: #555;">Your OTP is:</p>
+        <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; text-align: center; font-size: 24px; margin-bottom: 20px;">
+          <strong style="color: #333;"> ${OTP}</strong>
+        </div>
+        <p style="color: #555;">This OTP is valid for 10 minutes. Please do not share it with anyone.</p>
+        <p style="color: #555;">Thank you!</p>
+      </div>
+    </body>
+    </html>
+    `
+  
+    const mailOptions = {
+        from: "muhammedazeez473@gmail.com", //from email Id for recipient can view
+        to:email,
+        subject: "OTP Verification Code",
+        html: OTPContent,
+
+    };
+  
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email sented");
+        }
+    });
+
+
+    res.json({
+        Email: email,
+        OTP: OTP // Assuming generatedOTP holds the OTP value
+      });
+  });
+
+  function generateOTP() {
+    let otp = '';
+    for (let i = 0; i < 6; i++) {
+        otp += Math.floor(Math.random() * 10);
+    }
+    return otp;
+}
+  
+   

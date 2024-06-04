@@ -1,19 +1,46 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import myordericon from './UserImages/iconsMyorder.png'
-import arrowpath from './UserImages/arrowpathwishlist.png'
-import accountinfoicon from './UserImages/acountinfoicon.png'
-import paymenticon from './UserImages/paymenticonwishlist.png'
-import mystufficon from './UserImages/mystuff.png'
-import logouticon from './UserImages/logout.jpg'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom'
+// import myordericon from './UserImages/iconsMyorder.png'
+// import arrowpath from './UserImages/arrowpathwishlist.png'
+// import accountinfoicon from './UserImages/acountinfoicon.png'
+// import paymenticon from './UserImages/paymenticonwishlist.png'
+// import mystufficon from './UserImages/mystuff.png'
+// import logouticon from './UserImages/logout.jpg'
 
 const ForgotResetPswrd = () => {
+    const getEmail = sessionStorage.getItem("sendedEmail");
+    // const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const navigate = useNavigate()
+    
+    const findCustomer = () =>{
+        
+          if (newPassword === confirmNewPassword) {
+            
+            var data = {
+                email: getEmail,
+                newPassword: newPassword
+              };
+              axios.post('http://localhost:5000/getCustomerWithEmail',data).then((response)=>{
+                console.log(response.data);
+            })
+            navigate("/Login")
+          }
+      
+    }
+useEffect(()=>{
+
+},[])
     return (
         <div>
-            <div className='wishlistMainDiv'>
-                <div >
+            {/* <div className='wishlistMainDiv'>
+                <div > */}
 
-                    {/* <div className='welcomeDiv'>
+            {/* <div className='welcomeDiv'>
             <div><img src={wishlistimage} alt="img" className='wishlistimage' /></div>
             <div className='textDivwishlist'>
               <div style={{ fontFamily: "sans-serif", fontSize: "12px" }}>Hello,</div>
@@ -21,7 +48,7 @@ const ForgotResetPswrd = () => {
             </div>
           </div> */}
 
-                    <div className='MyordersFullDiv'>
+            {/* <div className='MyordersFullDiv'>
                         <div className='MyordersDiv'>
                             <div><img src={myordericon} alt="img" className='myordericon' /></div>
                             <Link to={'/User/Orders'} className='myOrderlink'>
@@ -81,23 +108,40 @@ const ForgotResetPswrd = () => {
                             <a class="_2YCxI1" href="/helpcentre">Help Center</a>
                         </div>
                     </div>
+                </div> */}
+
+
+            <div className='ResetPswrdFullDiv'>
+                <div className="resetPswrd ">
+                    RESET YOUR PASSWORD
+                </div>
+                <div style={{marginTop:"20px",fontSize:"14px",fontFamily:"sans-serif"}}>
+                    Enter your new password for {getEmail}
                 </div>
 
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div className='resetpaswrdInputarea'>
+                        <div>
+                            <input  type={showNewPassword ? "text" : "password"} id="Pswrd" name="Pswrd" required placeholder='password' className='resetpaswrdInputareaPswrd' onChange={(event) => setNewPassword(event.target.value)} />
+                           <div>
+                            <input type='checkbox' onChange={(event) => setShowNewPassword(event.target.checked)} />Show Password
+                           </div>
+                        </div>
 
-                <div className='ResetPswrdFullDiv'>
-                    <div className="resetPswrd ">
-                        Reset Your Password
-                    </div>
-                    <div>
-                    <input type="password" id="" value={""} class="form-control" autocomplete="off" />
-          <label class="cstmr-floating-label">Password</label>
+                        <div>
+                            <input type="password" id="Pswrd" name="Pswrd" required placeholder='confirmpassword' className='resetpaswrdInputareaPswrd' onChange={(event) => setConfirmNewPassword(event.target.value)} />
+                        </div>
+
+                        <button className='resetPBTn' onClick={findCustomer}>Submit</button>
                     </div>
 
                 </div>
-
 
             </div>
+
+
         </div>
+
     )
 }
 

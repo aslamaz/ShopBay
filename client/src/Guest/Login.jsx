@@ -14,9 +14,21 @@ const Login = () => {
     // Define state variables to track validation status
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [emailOtp,setEmailOtp] =useState('');
 
 
-
+const handleOTPEmail = () =>{
+    console.log(emailOtp);
+    var dat = {
+        email: emailOtp,
+      
+      };
+    axios.post('http://localhost:5000/sendOTP',dat).then((response)=>{
+        console.log(response.data.Email);
+        sessionStorage.setItem("sendedOTP", response.data.OTP)
+        sessionStorage.setItem("sendedEmail",emailOtp )
+    })
+}
 
 
     const handleLogin = () => {
@@ -120,11 +132,11 @@ const Login = () => {
                     </div>
                     <div>
                         <div class="input-container">
-                            <input type="mail" required="" placeholder='Enter email address'/>
+                            <input type="mail" required="" placeholder='Enter email address' onChange={(event)=>setEmailOtp(event.target.value)}/>
                         </div>
                         <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
-                             <Link to={'/User/OtpPage'} style={{width:"100%"}}>
-                            <button className='btnOTP'>Request OTP</button>
+                             <Link to={'/OtpPage'} style={{width:"100%"}}>
+                            <button className='btnOTP' onClick={handleOTPEmail}>Request OTP</button>
                             </Link>
                         </div>
                     </div>
