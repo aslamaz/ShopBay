@@ -11,30 +11,29 @@ import { useNavigate } from 'react-router-dom';
 
 const ForgotResetPswrd = () => {
     const getEmail = sessionStorage.getItem("sendedEmail");
-    // const [showPassword, setShowPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const navigate = useNavigate()
-    
-    const findCustomer = () =>{
-        
-          if (newPassword === confirmNewPassword) {
-            
+
+    const findCustomer = () => {
+
+        if (newPassword === confirmNewPassword) {
+
             var data = {
                 email: getEmail,
                 newPassword: newPassword
-              };
-              axios.post('http://localhost:5000/getCustomerWithEmail',data).then((response)=>{
+            };
+            axios.post('http://localhost:5000/getCustomerWithEmail', data).then((response) => {
                 console.log(response.data);
             })
-            navigate("/Login")
-          }
-      
-    }
-useEffect(()=>{
+            navigate("/Guest/Login")
+        }
 
-},[])
+    }
+    useEffect(() => {
+
+    }, [])
     return (
         <div>
             {/* <div className='wishlistMainDiv'>
@@ -115,17 +114,17 @@ useEffect(()=>{
                 <div className="resetPswrd ">
                     RESET YOUR PASSWORD
                 </div>
-                <div style={{marginTop:"20px",fontSize:"14px",fontFamily:"sans-serif"}}>
+                <div style={{ marginTop: "20px", fontSize: "14px", fontFamily: "sans-serif" }}>
                     Enter your new password for {getEmail}
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <div className='resetpaswrdInputarea'>
                         <div>
-                            <input  type={showNewPassword ? "text" : "password"} id="Pswrd" name="Pswrd" required placeholder='password' className='resetpaswrdInputareaPswrd' onChange={(event) => setNewPassword(event.target.value)} />
-                           <div>
-                            <input type='checkbox' onChange={(event) => setShowNewPassword(event.target.checked)} />Show Password
-                           </div>
+                            <input type={showNewPassword ? "text" : "password"} id="Pswrd" name="Pswrd" required placeholder='password' className='resetpaswrdInputareaPswrd' onChange={(event) => setNewPassword(event.target.value)} />
+                            <div style={{ textAlign: "left",marginBottom:"10px"}}>
+                                <input type='checkbox' onChange={(event) => setShowNewPassword(event.target.checked)} />Show Password
+                            </div>
                         </div>
 
                         <div>

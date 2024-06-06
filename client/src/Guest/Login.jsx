@@ -27,6 +27,7 @@ const handleOTPEmail = () =>{
         console.log(response.data.Email);
         sessionStorage.setItem("sendedOTP", response.data.OTP)
         sessionStorage.setItem("sendedEmail",emailOtp )
+        sessionStorage.setItem("otpTimestamp", Date.now());
     })
 }
 

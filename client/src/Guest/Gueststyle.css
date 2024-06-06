@@ -631,8 +631,9 @@ color: white;
   display: flex;
   align-items: center;
   justify-content: center;
- 
   background-color: #f1f3f6;
+  padding-top: 16px;
+  padding-bottom: 30px;
 }
 .RegisterAccount{
   text-decoration: none;
@@ -760,6 +761,7 @@ font-size: 13px;
   /* margin: 20px; */
   /* margin-left: 28px; */
   margin-top: 10px;
+  margin-left: 100px;
 }
 .s2gOFdOTP {
   display: block;
@@ -803,6 +805,11 @@ align-items: center;
 .btnOTPPage:hover{
   background-color: hsl(20, 94%, 49%);
 }
+.btnreGenerateOTP{
+  color: gray;
+  font-size: 16px;
+  font-family: sans-serif;
+}
 
 .ResetPswrdFullDiv {
   width: 1244px;
@@ -813,6 +820,7 @@ align-items: center;
   /* margin: 20px; */
   /* margin-left: 28px; */
   margin-top: 10px;
+  margin-left: 100px;
 }
 .resetPswrd{
   font-size: 30px;
@@ -834,7 +842,6 @@ align-items: center;
 
 .resetpaswrdInputareaPswrd {
   padding: 10px;
-  margin-bottom: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   width: 300px;
