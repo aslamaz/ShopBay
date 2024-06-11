@@ -6,7 +6,8 @@ const multer = require("multer");
 const { request } = require("https");
 const { parse } = require("querystring");
 const mailer = require('nodemailer')
-
+const argon2 = require('argon2');
+const { log } = require("console");
 
 const app = express();
 const port = 5000;
@@ -772,8 +773,9 @@ app.post("/Customer",
             console.log(profileimgsrc);
 
             const { customerName, customerEmail, customerContact, customerAddress, placeId, customerPassword, } = req.body;
+            const hashPassword = await argon2.hash("customerPassword")
             const newCustomer = new modelCustomer({
-                customerName, customerEmail, customerContact, customerAddress, placeId, profileimgsrc, customerPassword
+                customerName, customerEmail, customerContact, customerAddress, placeId, profileimgsrc, customerPassword: hashPassword
             });
             await newCustomer.save();
             res.json(newCustomer);
@@ -813,10 +815,10 @@ app.post("/getCustomerWithEmail", async (req, res) => {
     const getEmail = req.body.email;
     const newPassword = req.body.newPassword
     try {
-        const getCustomer = await modelCustomer.findOne({ customerEmail : getEmail });
+        const getCustomer = await modelCustomer.findOne({ customerEmail: getEmail });
         const updateCustomer = await modelCustomer.findByIdAndUpdate(
             getCustomer._id,
-            { customerPassword : newPassword }, { new: true }
+            { customerPassword: newPassword }, { new: true }
         );
         res.json(updateCustomer);
         console.log(updateCustomer);
@@ -858,13 +860,27 @@ app.get("/customerWithPlace/:id", async (req, res) => {
 //Update Customer...................
 app.put("/updateCustomer/:id", async (req, res) => {
     const id = req.params.id;
+    const oldpswrd = req.body.oldpaswrd;
     try {
         const { customerName, customerEmail, customerContact, customerAddress, placeId, customerPhoto, customerPassword } = req.body;
-        const updateCustomer = await modelCustomer.findByIdAndUpdate(
-            id,
-            { customerName, customerEmail, customerContact, customerAddress, placeId, customerPhoto, customerPassword }, { new: true }
-        );
-        res.json(updateCustomer);
+        const customerData = await modelCustomer.findById(id);
+        // console.log(customerData.customerPassword);
+
+        if (argon2.verify(customerData.customerPassword, oldpswrd)) {
+            // password match
+            const hashPassword = await argon2.hash("customerPassword")
+            const updateCustomer = await modelCustomer.findByIdAndUpdate(
+                id,
+                { customerName, customerEmail, customerContact, customerAddress, placeId, customerPhoto, customerPassword: hashPassword }, { new: true }
+            );
+            let msg = "";
+            msg = 'Password updated successfully!'
+            res.json({ updateCustomer, msg });
+        } else {
+            let msg = ""
+            msg = 'Old password is incorrect.'
+            res.json(msg);
+        }
     } catch (err) {
         console.error(err.message);
         res.status(500).send("server Error");
@@ -2436,13 +2452,15 @@ app.delete("/deleteWishlist/:id", async (req, res) => {
 app.post("/loginCheck", async (req, res) => {
 
     const { userEmail, userPassword } = req.body;
+    console.log(req.body);
 
     const customer = await modelCustomer.findOne({ customerEmail: userEmail })
     const Shop = await modelShop.findOne({ shopEmail: userEmail })
     const Admin = await modelAdmin.findOne({ adminEmail: userEmail })
 
     if (customer) {
-        if (customer.customerPassword === userPassword) {
+        console.log(customer.customerPassword);
+        if (argon2.verify(customer.customerPassword, userPassword)) {
             res.send({
                 message: "Login Successful",
                 id: customer._id,
@@ -2454,7 +2472,7 @@ app.post("/loginCheck", async (req, res) => {
 
 
     if (Shop) {
-        if (Shop.shopPassword === userPassword) {
+        if (argon2.verify(Shop.customerPassword, userPassword)) {
             res.send({
                 message: "Login Successful",
                 id: Shop._id,
@@ -2465,7 +2483,7 @@ app.post("/loginCheck", async (req, res) => {
 
 
     if (Admin) {
-        if (Admin.adminPassword === userPassword) {
+        if (argon2.verify(Admin.customerPassword, userPassword)) {
             if (Admin.adminPassword === userPassword) {
                 res.send({
                     message: "Login Successful",
@@ -2516,7 +2534,7 @@ function sendEmail(to, content) {
 // sent otp to Eamil.............................
 
 app.post('/sendOTP', (req, res) => {
-    const email= req.body.email;
+    const email = req.body.email;
     const OTP = generateOTP();
     const OTPContent = `<!DOCTYPE html>
     <html lang="en">
@@ -2539,15 +2557,15 @@ app.post('/sendOTP', (req, res) => {
     </body>
     </html>
     `
-  
+
     const mailOptions = {
         from: "muhammedazeez473@gmail.com", //from email Id for recipient can view
-        to:email,
+        to: email,
         subject: "OTP Verification Code",
         html: OTPContent,
 
     };
-  
+
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
@@ -2560,15 +2578,15 @@ app.post('/sendOTP', (req, res) => {
     res.json({
         Email: email,
         OTP: OTP // Assuming generatedOTP holds the OTP value
-      });
-  });
+    });
+});
 
-  function generateOTP() {
+function generateOTP() {
     let otp = '';
     for (let i = 0; i < 6; i++) {
         otp += Math.floor(Math.random() * 10);
     }
     return otp;
 }
-  
-   
+
+

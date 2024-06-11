@@ -93,7 +93,7 @@ const PageCart = () => {
         }
         axios.post(`http://localhost:5000/Wishlist`, data).then((response) => {
             console.log(response.data);
-            alert(response.data.message)
+            toast.success(response.data.message);
         })
 
     }

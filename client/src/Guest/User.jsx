@@ -6,6 +6,8 @@ import contacticon from './GuestImages/phone.png'
 import Addressicon from './GuestImages/location.png'
 import passwordicon from './GuestImages/padlock.png'
 import pablosign from './GuestImages/pablo-sign-in-2.jpg'
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 const User = () => {
@@ -36,6 +38,8 @@ const User = () => {
 
     axios.post('http://localhost:5000/Customer', frm).then((response) => {
       console.log(response.data);
+      toast.success("successfully Done Registration");
+      resetForm();
     })
   }
 
@@ -151,6 +155,14 @@ const User = () => {
       </div>
 
       <img src={pablosign} alt="img" style={{width:"800px",height:"680px",objectFit:"contain"}} />
+
+      <ToastContainer
+                position='bottom-center'
+                autoClose='3000'
+                theme='dark'
+                hideProgressBar="true"
+                style={{ width: '500px' }}
+            />
     </div>
   )
 }
