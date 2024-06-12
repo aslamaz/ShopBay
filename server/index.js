@@ -816,9 +816,10 @@ app.post("/getCustomerWithEmail", async (req, res) => {
     const newPassword = req.body.newPassword
     try {
         const getCustomer = await modelCustomer.findOne({ customerEmail: getEmail });
+        const hashPassword = await argon2.hash("newPassword")
         const updateCustomer = await modelCustomer.findByIdAndUpdate(
             getCustomer._id,
-            { customerPassword: newPassword }, { new: true }
+            { customerPassword: hashPassword }, { new: true }
         );
         res.json(updateCustomer);
         console.log(updateCustomer);
@@ -2590,3 +2591,61 @@ function generateOTP() {
 }
 
 
+
+//delivery checking Shema....
+const collectionPincodesSchema = new Schema({
+    pincode: {
+        type: String,
+        required: true,
+    },
+    customerId: {
+        type: Schema.Types.ObjectId,
+        ref: "tblCustomer",
+    },
+    productId: {
+        type: Schema.Types.ObjectId,
+        ref: "tblProduct",
+    },
+    serviceable: {
+        type: Boolean,
+        default: true,
+    }
+});
+
+const modelPincodes = model("tblPincodes", collectionPincodesSchema);
+
+app.post('/postPincodes', async (req, res) => {
+    try {
+        const { pincode, serviceable } = req.body
+        const newPincodes = new modelPincodes({
+            pincode,
+            serviceable,
+            
+        })
+        await newPincodes.save();
+        res.json(newPincodes);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("server Error");
+    }
+});
+
+// Endpoint to check pincode serviceability
+app.post('/checkPincode', async (req, res) => {
+    const pincode  = req.body.userPincode;
+    console.log(pincode);
+    if (!pincode) {
+        return res.status(400).json({ error: 'Pincode is required' });
+    }
+    
+    try {
+        const result = await modelPincodes.findOne({ pincode: pincode });
+        if (result) {
+            return res.json({ serviceable: result.serviceable });
+        } else {
+            return res.json({ serviceable: false });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});

@@ -28,6 +28,8 @@ const ProductDetails = () => {
     const [showGallery, setShowGallery] = useState([]);
     const [review, setReview] = useState([]);
     const [bookingDate, setBookingDate] = useState('');
+    const [pincode, setPincode] = useState('');
+    const [result, setResult] = useState(null);
 
     // const [customerBookingId,SetcustomerBookingId] = useState('');
     // const [bookingDate,setBookingDate] = useState('');
@@ -171,6 +173,17 @@ const ProductDetails = () => {
         setBookingDate(formattedDate);
     };
 
+    const checkPincode = async () => {
+        var data = {
+            userPincode: pincode
+        }
+        console.log(pincode);
+        axios.post('http://localhost:5000/checkPincode', data).then((response) => {
+            console.log(response.data);
+            const data = response.data;
+            setResult(data.serviceable ? 'Delivery Available' : 'Delivery Not Available');
+        })
+    }
 
     useEffect(() => {
         fetchProduct();
@@ -356,10 +369,14 @@ const ProductDetails = () => {
 
                             <div>
                                 <div className='inputStyleDiv' >
-                                    <input class="_36yFo0" placeholder="Enter Delivery Pincode" type="text" maxlength="6" id="pincodeInputId" value=""></input>
-                                    <button className='pincodecheckbtn'>Check</button>
+                                    <input class="_36yFo0" placeholder="Enter Delivery Pincode" type="text" maxlength="6" id="pincodeInputId" value={pincode} onChange={(e) => setPincode(e.target.value)}></input>
+                                    <button className='pincodecheckbtn' onClick={checkPincode}>Check</button>
                                 </div>
-                                <div style={{ fontFamily: "Roboto,Arial,sans-serif", fontSize: "14px", marginTop: "10px" }}>Delivery by {bookingDate}|<del style={{ color: "#388e3c" }}>Free<del style={{ color: "#9e9e9e" }}>₹40</del></del></div>
+                                {result && <div style={{ fontFamily: "Roboto,Arial,sans-serif", fontSize: "14px", marginTop: "2px" }}>{result}</div>}
+
+                                {result &&
+                                    <div style={{ fontFamily: "Roboto,Arial,sans-serif", fontSize: "12px" }}>Delivery by {bookingDate}|<del style={{ color: "#388e3c" }}>Free<del style={{ color: "#9e9e9e" }}>₹40</del></del></div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -534,7 +551,7 @@ const ProductDetails = () => {
 
                 </div>
             </div>
-            
+
 
         </div >
     )

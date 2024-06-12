@@ -102,7 +102,7 @@ const Mobiles = () => {
 
             setShowPrdct(data);
             setShowPrdctCopy(data)
-            console.log(CategoryName);
+            setCategoryName(data[0].subCategoryId.categoryId.category);
         })
     }, [])
 
@@ -183,45 +183,7 @@ const Mobiles = () => {
                                     ))}
                                 </details>
                             </div>
-
-
-
-
-                            {/* <Button
-                                id="basic-button"
-                                aria-controls={open ? 'basic-menu' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}
-                            >
-                                BRAND
-                            </Button>
-                            <Menu
-                                id="basic-menu"
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                MenuListProps={{
-                                    'aria-labelledby': 'basic-button',
-                                }}
-                            > */}
-                            {/*                                
-                                    <MenuItem sx={{ width: "238px" }} onClick={() => subcategoryBasedProducts(subCategories._id)}>
-                                        <Checkbox size="small" />
-                                        
-                                    </MenuItem> */}
-
-                            {/* <MenuItem > <Checkbox  size="small"/>Realme</MenuItem>
-                                <MenuItem > <Checkbox  size="small"/>Samsung</MenuItem>
-                                <MenuItem > <Checkbox size="small"/>Apple</MenuItem>
-                                <MenuItem > <Checkbox size="small"/>Google</MenuItem>
-                                <MenuItem > <Checkbox size="small"/>Motorolla</MenuItem>
-                                <MenuItem > <Checkbox size="small"/>Redmi</MenuItem> */}
-
                         </div>
-
-
-
                     </div>
                 </div>
 
