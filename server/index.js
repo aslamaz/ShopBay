@@ -2511,7 +2511,7 @@ var transporter = mailer.createTransport({
     service: "gmail",
     auth: {
         user: "muhammedazeez473@gmail.com", //from email Id
-        pass: "apwrkaqqwohzgfdi", // App password created from google account
+        pass: "bcrf dvbo ydsv gufz", // App password created from google account
     },
 });
 

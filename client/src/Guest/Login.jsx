@@ -85,7 +85,7 @@ const handleOTPEmail = () =>{
                 <div className='loginPageSide1div'>
                     <div className='LoginText'>Login</div>
                     <div className='LoginDescription'>Get access to your Orders, Wishlist and Recommendations</div>
-                    <div style={{ display: "flex", justifyContent: "center", marginTop: "135px" }}>
+                    <div className='logimgDiv'>
 
                         <img src={loginPageImg} alt="img" />
                     </div>

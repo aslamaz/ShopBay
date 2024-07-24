@@ -5,11 +5,18 @@ import manShopping from './GuestImages/bestmanshoppingimg.png'
 
 const Home = () => {
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ width: "300px", height: "400px", marginLeft: "120px", marginTop: "100px", }}>
+    <div className="home-container">
+      <div className="text-container">
         <div className='ONLINEDiv'>ONLINE</div>
         <div className='SHOPPINGDiv'>SHOPPING</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam quam soluta harum quos amet.</div>
+        <div className='descShop'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+           It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+           It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+           and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+</div>
        
         <div id="container">
           <button class="learn-more">
@@ -24,7 +31,7 @@ const Home = () => {
 
 
       </div>
-      <img src={manShopping} alt="img" style={{ marginLeft: "400px", objectFit: "contain", height: "350px", marginTop: "90px" }} />
+      <img src={manShopping} alt="img" className="shopping-image" />
     </div>
   )
 }

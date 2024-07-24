@@ -117,7 +117,9 @@ const User = () => {
 
 
         <div className='cstmrslctDistrict' >
-
+        <div >
+              District:
+            </div>
           <select name="District" id="slct-District" onChange={(event) => {
             setDistrict(event.target.value)
             getDistrictwithPlace(event.target.value)
@@ -132,6 +134,8 @@ const User = () => {
         </div>
 
         <div className='cstmrSlctPlace'>
+        <div>
+        Place:</div>
           <select name="Place" id="slct-Place" onChange={(event) => setPlace(event.target.value)}>
 
             <option value="" >---Select Place---</option>
