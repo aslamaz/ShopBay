@@ -925,7 +925,7 @@ display: flex;
 
 .descShop {
   text-align: start;
-  width: 600px;
+  width: 500px;
 }
 
 /* Media Queries */
@@ -960,7 +960,7 @@ display: flex;
   }
 }
 
-/*login page css*/
+/*login page css....................................................................................*/
 
 .LoginFullDiv {
   display: flex;
@@ -1136,7 +1136,7 @@ display: flex;
   }
 }
 
-/*otp page csss*/
+/*otp page csss..................................................................................*/
 /* Container */
 .OTPHOMEDIV {
   display: flex;
@@ -1364,8 +1364,9 @@ display: flex;
     font-size: 12px;
   }
 }
-/*header css responsive */
+/*header css responsive................................................................................. */
 .headcontainer {
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
@@ -1408,6 +1409,7 @@ display: flex;
   .headcontainer {
     flex-direction: column;
     align-items: start;
+    width: 100px;
   }
 
   .headcontainer ul {
@@ -1431,7 +1433,7 @@ display: flex;
   }
 }
 
-/*user registration css page */
+/*user registration css page ............................................................................*/
 
 
 .Guestdiv {

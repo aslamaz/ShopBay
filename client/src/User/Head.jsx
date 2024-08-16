@@ -32,7 +32,11 @@ const Head = () => {
   const searchedProduct = useNavigate();
   const navigate = useNavigate()
 
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   const addCartProduct = () => {
     axios.get(`http://localhost:5000/cartWithBooking/${Id}`).then((response) => {
@@ -130,7 +134,7 @@ const Head = () => {
           </datalist>
         </div>
 
-        <div className='dropdown'>
+        <div className={`dropdown ${menuOpen ? 'menu-open' : ''}`}>
           <div className='Userlinks'>
 
             <button className="dropbtn"> <img src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/profile-52e0dc.svg" alt="loginiconimg" className='linklogos' />{name}</button>
@@ -180,7 +184,7 @@ const Head = () => {
         <div className='Userlinks'>
 
           <Link to={'/User/PageCart'} className='Userlinks'>
-            <IconButton aria-label="cart">
+            <IconButton aria-label='cart'>
               <StyledBadge badgeContent={cartlength} color="warning">
                 <ShoppingCartIcon />
               </StyledBadge>
@@ -195,7 +199,7 @@ const Head = () => {
 
         <div className='Userlinks'>
 
-          <button className="extramenu"><img src={menu} alt="menuimg" className='linklogos' /></button>
+          <button className="extramenu" onClick={toggleMenu}><img src={menu} alt="menuimg" className='linklogos' /></button>
         </div>
 
       </div>

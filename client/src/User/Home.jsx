@@ -50,7 +50,7 @@ const Home = () => {
   const fetchCategory = async () => {
     const response = await axios.get('http://localhost:5000/getCategory');
     const categoriesData = response.data;
-    
+
     const updatedShowSubCategory = await Promise.all(categoriesData.map(async (category) => {
       const subCategoryResponse = await axios.get(`http://localhost:5000/subCategoryWithCategoryHome/${category._id}`);
       const subCategoryData = subCategoryResponse.data;
@@ -60,9 +60,9 @@ const Home = () => {
 
     setShowSubCategory(updatedShowSubCategory);
   }
-  
 
- 
+
+
 
 
 
@@ -76,7 +76,7 @@ const Home = () => {
 
 
   return (
-    
+
     <div>
       <div className='homemainDiv'>
 
@@ -110,18 +110,17 @@ const Home = () => {
           </div>
         </div>
 
-       
+
         <Link to={`/User/Mobiles/${"65a79b7466c4a55b4d17810b"}`} className='Userlinks'>
-        <div className='linkimage'>
-          <div className='imageDiv'>
-            <img src={mobile} alt="img" className='productsimage' />
+          <div className='linkimage'>
+            <div className='imageDiv'>
+              <img src={mobile} alt="img" className='productsimage' />
 
-            <button className="Mobile-dropbtn">Mobile</button>
+              <button className="Mobile-dropbtn">Mobile</button>
 
+            </div>
           </div>
-        </div>
         </Link>
-        {/* ))} */}
 
         <div className='linkimage'>
           <div className='Grocery-dropdown'>
@@ -298,63 +297,58 @@ const Home = () => {
             <img src={slide5} alt="img" className='slideimage' />
           </div>
         </Carousel>
-        {/* <marquee speed="500" behavior="alternate" scrollamount="10"> */}
 
-
-
-        {/* <img src={slide3} alt="img" className='slideimage' /> */}
-
-        {/* </marquee> */}
 
       </div>
-<div style={{display:"flex"}}>
-  <div>
-      {ShowSubCategory.map((Categories, key) => (
+      {/* <div style={{ display: "flex" }}> */}
+        <div>
+          {ShowSubCategory.map((Categories, key) => (
 
-        <div className='productsection'>
+            <div className='productsection'>
 
 
-          <div className='headandprdctimages'>
-            <div className='prdctheading'>
-              <div style={{
-                fontSize: "24px",
-                fontFamily: "inter_semi_bold,fallback-inter_semi_bold"
-              }}><b>{Categories.category}</b></div>
+              <div className='headandprdctimages'>
+                <div className='prdctheading'>
+                  <div style={{
+                    marginLeft:"22px",
+                    fontSize: "24px",
+                    fontFamily: "inter_semi_bold,fallback-inter_semi_bold"
+                  }}><b>{Categories.category}</b></div>
 
+                </div>
+
+
+
+                <div className='electronicprdcts'>
+
+                  {Categories.subCategory.map((subcategory, key) => (
+
+                    <Link to={`/User/Relatedproducts/${subcategory._id}`} className='Userlinks'>
+                      <div className='priceandimage'>
+                        <div className='imagediv'>
+                          <img src={subcategory.subCategoryimgsrc} alt="img" className='eletronicsprdctimages' />
+                        </div>
+                        <div className='pricenamediv'>
+                          <div style={{ display: "flex", justifyContent: "center", }}>{subcategory.subCategoryName}</div>
+                        </div>
+
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+              </div>
             </div>
-
-
-
-            <div className='electronicprdcts'>
-
-              {Categories.subCategory.map((subcategory, key) => (
-
-                <Link to={`/User/Relatedproducts/${subcategory._id}`} className='Userlinks'>
-                  <div className='priceandimage'>
-                    <div className='imagediv'>
-                      <img src={subcategory.subCategoryimgsrc} alt="img" className='eletronicsprdctimages' />
-                    </div>
-                    <div className='pricenamediv'>
-                      <div style={{ display: "flex", justifyContent: "center", }}>{subcategory.subCategoryName}</div>
-                    </div>
-
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-          </div>
+          ))}
         </div>
-      ))}
-      </div>
 
-      <div className='add'>
-        <img src={flightadd} alt="img" className='addflight' />
-      </div>
+        {/* <div className='add'>
+          <img src={flightadd} alt="img" className='addflight' />
+        </div> */}
 
       </div>
 
-    </div>
+    // </div>
 
   )
 }
